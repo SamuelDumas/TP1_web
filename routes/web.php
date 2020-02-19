@@ -22,3 +22,4 @@ Route::get('film', function () {
 Route::get('filminfo', function () {
     return view('welcome');
 });
+32 4234324
