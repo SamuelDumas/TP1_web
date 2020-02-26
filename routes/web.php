@@ -11,14 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'Auth\LoginController@');
+Route::post('add-film','addFilmController@store');
+Route::get('films','viewFilmsController@show');
+//Route::post
 
 
-});
-Route::get('film', function () {
-    return view('welcome');
-});
+//Route::post('users', 'Auth\LoginController@__construct');
 Route::get('filminfo2', function () {
     return view('welcome');
 });
