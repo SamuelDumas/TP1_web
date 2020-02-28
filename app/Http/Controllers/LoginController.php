@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Film;
 
 class LoginController extends Controller
 {
@@ -13,7 +13,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('loginView');
+        return Film::all();
     }
 
     /**
