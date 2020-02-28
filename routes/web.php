@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', 'viewFilmsController@index');
-Route::post('add-film','viewFilmsController@store');
-Route::get('films','viewFilmsController@show');
-Route::post ('update','viewFilmsController@update');
-Route::get('delete','viewFilmsController@destroy');
-//Route::get('actors','actorsController@show');
-//Route::post()
+
+
+
+
+//Route::post ('update','updateController@update');
+//Route::get('delete','deleteController@destroy');
+//Route::get('')
 
 
 //Route::post('users', 'Auth\LoginController@__construct');

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Film;
 
-class viewFilmsController extends Controller
+class actorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class viewFilmsController extends Controller
      */
     public function index()
     {
-        return Film::all();
+        //
     }
 
     /**
@@ -34,22 +34,8 @@ class viewFilmsController extends Controller
      */
     public function store(Request $request)
     {
-        $donnees = $request->all();
-
-        $unFilm = Film::create([ 
-            'title' => $donnees['title'], 
-            'release_year' => $donnees['release_year'],
-            'length'=>  $donnees['length'],
-            'description' => $donnees['description'],
-            'rating' => $donnees['rating'],
-            'language_id' => $donnees['language_id'],
-            'special_features'=> $donnees['special_features'],
-            'image'=> $donnees['image'],
-            'created_at'=> $donnees['created_at']
-          ]);
-
-          return $unFilm;
-}
+        //
+    }
 
     /**
      * Display the specified resource.
@@ -59,9 +45,12 @@ class viewFilmsController extends Controller
      */
     public function show($id)
     {
-        $unFilm = Film::findOrFail($id);
-        $Critic = Film::find($id)->critic;
-        return compact('unFilm','Critic');
+        $film = Film::findOrFail($id);
+        $actor = Film::find($id)->actors();
+        return compact('film','actor');
+        //foreach($film->actors as $actor){
+          //  return compact('actor');
+       // }
     }
 
     /**
@@ -84,8 +73,7 @@ class viewFilmsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $film = \App\Film::findOrFail($id);
-        $film->update($request->all());
+        //
     }
 
     /**
@@ -96,8 +84,6 @@ class viewFilmsController extends Controller
      */
     public function destroy($id)
     {
-        $film = Film::find($id);
-        $film->delete();
-        var_dump($film);
+        //
     }
 }
