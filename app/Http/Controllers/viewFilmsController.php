@@ -50,6 +50,11 @@ class viewFilmsController extends Controller
         return compact('unFilm','Critic');
     }
 
+    public function search(Request $request)
+    {
+        $films = DB::table('films')->where('title','like','%'.$request->get('title').'%')->get();
+        return compact('films');
+    }
     /**
      * Show the form for editing the specified resource.
      *
