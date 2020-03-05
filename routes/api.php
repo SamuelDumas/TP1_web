@@ -23,3 +23,7 @@ Route::get('/films/{id}','viewFilmsController@show');
 Route::put('/films_update/{id}','viewFilmsController@update');
 Route::delete('/films_destroy/{id}','viewFilmsController@destroy');
 Route::get('/films_actors/{id}','actorController@show');
+Route::get('/users/{id}',['middlewear'=>'auth','uses'=>'UserController@show']);
+Route::post('/createUser','RegisterController@create');
+Route::put('/updateUser','UserController@update');
+Route::get('/searchFilms','viewFilmsController@search');

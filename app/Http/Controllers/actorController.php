@@ -47,10 +47,10 @@ class actorController extends Controller
     {
         $film = Film::findOrFail($id);
         $actor = Film::find($id)->actors();
-        return compact('film','actor');
-        //foreach($film->actors as $actor){
-          //  return compact('actor');
-       // }
+       // return compact('film','actor');
+        foreach($film->actors as $actor){
+           echo $actor->name;
+       }
     }
 
     /**

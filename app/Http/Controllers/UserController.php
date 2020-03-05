@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Film;
+use App\User;
 
-class LoginController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return Film::all();
+        
     }
 
     /**
@@ -34,13 +34,10 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        $donnees = $request->all();
-        $username = $donnees['username'];
-        $password = $donnees['password'];
-        $this->verifyRole($donnees);
-
-
-        return view('welcome', compact('role_id'));
+       // $donnees = $request->all();
+        //$username = $donnees['username'];
+       // $password = $donnees['password'];
+        //$this->verifyRole($donnees);
     }
 
     /**
@@ -51,7 +48,10 @@ class LoginController extends Controller
      */
     public function show($id)
     {
-        //
+        if(Auth::id()==$id){
+        $user = User::findOrFail($id);
+        return compact('user');
+        }
     }
 
     /**
@@ -74,7 +74,8 @@ class LoginController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $user = \App\User::findOrFail($id);
+        $user->update($request->all());
     }
 
     /**
