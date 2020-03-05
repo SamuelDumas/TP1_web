@@ -16,7 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('film', 'viewFilmsController@index');
+Route::get('profil', [ 'middleware' => 'auth', 'uses' => 'UserController@show' ]);
+Route::get('film', ['middleware'=>'auth', 'uses'=>'viewFilmsController@index']);
 Route::post('add-film','addFilmController@store');
 Route::get('/films/{id}','viewFilmsController@show');
 Route::put('/films_update/{id}','viewFilmsController@update');
