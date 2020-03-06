@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', 'Auth\LoginController@');
-Route::post('add-film','addFilmController@store');
-Route::get('films','viewFilmsController@show');
+
+
+
+
 //Route::post ('update','updateController@update');
 //Route::get('delete','deleteController@destroy');
 //Route::get('')
