@@ -35,6 +35,8 @@ class filmController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()->role->name == 'Admin')
+        {
         $donnees = $request->validated();
 
         $unFilm = Film::create([ 
@@ -50,6 +52,7 @@ class filmController extends Controller
           ]);
 
           return $unFilm;
+        }
 }
 
     /**
