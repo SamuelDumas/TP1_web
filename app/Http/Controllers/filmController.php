@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Film;
 
-class viewFilmsController extends Controller
+class filmController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -75,8 +75,11 @@ class viewFilmsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Auth::user()->role->name == 'Admin')
+        {
         $film = \App\Film::findOrFail($id);
         $film->update($request->all());
+        }
     }
 
     /**
@@ -87,8 +90,10 @@ class viewFilmsController extends Controller
      */
     public function destroy($id)
     {
+        if(Auth::user()->role->name == 'Admin'){
         $film = Film::find($id);
         $film->delete();
         var_dump($film);
+        }
     }
 }
