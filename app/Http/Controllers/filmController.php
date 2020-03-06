@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
+use App\Http\Requests\filmRequest;
 use App\Film;
 
 class viewFilmsController extends Controller
@@ -34,7 +35,7 @@ class viewFilmsController extends Controller
      */
     public function store(Request $request)
     {
-        $donnees = $request->all();
+        $donnees = $request->validated();
 
         $unFilm = Film::create([ 
             'title' => $donnees['title'], 
@@ -66,7 +67,23 @@ class viewFilmsController extends Controller
 
     public function search(Request $request)
     {
-        $films = DB::table('films')->where('title','like','%'.$request->get('title').'%')->get();
+        $films;
+        if($request->get('title') != NULL)
+        {
+            $films = Film::where('title','like','%'.$request->get('title').'%')->take(20)->get();
+        }
+        if($request->get('rating') != NULL)
+        {
+            $films = Film::where('rating','like','%'.$request->get('rating').'%')->take(20)->get();
+        }
+        if($request->get('min_length')!= NULL)
+        {
+            $films = Film::where('length','>=','%'.$request->get('min_length').'%')->take(20)->get();
+        }
+        if($request->get('max_length') != NULL)
+        {
+            $films = Film::where('length','<=','%'.$request->get('max_length').'%')->take(20)->get();
+        }
         return compact('films');
     }
     /**
@@ -88,9 +105,11 @@ class viewFilmsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $film = \App\Film::findOrFail($id);
-        $film->update($request->all());
+    {   
+        $donnees = $request->validated();
+
+        $film = Film::findOrFail($id);
+        $film->update($donnees->all());
     }
 
     /**

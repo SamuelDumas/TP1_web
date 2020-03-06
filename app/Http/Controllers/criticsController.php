@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Critic;
 
 class criticsController extends Controller
 {
@@ -13,7 +14,7 @@ class criticsController extends Controller
      */
     public function index()
     {
-        //
+        return Critic::all();
     }
 
     /**
@@ -34,7 +35,18 @@ class criticsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $donnees = $request->all();
+        $critic = Critic::create([ 
+            'user_id' => $donnees['user_id'], 
+            'film_id' => $donnees['film_id'],
+            'score'=>  $donnees['score'],
+            'comment' => $donnees['comment'],
+            'created_at' => $donnees['created_at'],
+            'updated_at' => $donnees['updated_at'],
+            'special_features'=> $donnees['special_features'],
+            'image'=> $donnees['image'],
+
+          ]);
     }
 
     /**

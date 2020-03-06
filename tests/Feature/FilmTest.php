@@ -8,6 +8,7 @@ use Tests\TestCase;
 
 class FilmTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -18,5 +19,9 @@ class FilmTest extends TestCase
         $response = $this->json('GET','/films/1',['id' => '1']);
         $response -> assertStatus(201)
                   -> assertJson(['created' => true]);
+    }
+    public function testStoreFilm()
+    {
+
     }
 }

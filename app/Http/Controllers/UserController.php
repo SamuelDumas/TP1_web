@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
+use App\Http\Requests\userRequest;
 use App\User;
 
 class UserController extends Controller
@@ -13,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+        return User::all();
     }
 
     /**
@@ -34,10 +35,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-       // $donnees = $request->all();
-        //$username = $donnees['username'];
-       // $password = $donnees['password'];
-        //$this->verifyRole($donnees);
+       $donnees = $request->validated();
+
+       $user = User::create([ 
+        'login' => $donnees['login'], 
+        'password' => $donnees['password'],
+        'email'=>  $donnees['email'],
+        'last_name' => $donnees['last_name'],
+        'first_name' => $donnees['first_name'],
+        'role_id' => $donnees['role_id'],
+
+      ]);
+    
     }
 
     /**
@@ -48,9 +57,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if(Auth::id()==$id){
-        $user = User::findOrFail($id);
-        return compact('user');
+        if(Auth::user()->id == $id){
+            $user = User::findOrFail($id);
+            return compact('user');
         }
     }
 
@@ -88,33 +97,6 @@ class UserController extends Controller
     {
         //
     }
-    public function verifyRole(array $donnees)
-    {
-        $username = $donnees['username'];
-        $password = $donnees['password'];
-        $msgErreur = null;
-        if ( $username == NULL || $password == NULL )
-	       $msgErreur = "Les paramètre n'ont pas été fourni avec la requête.";
-        else
-        {
-            require("include/param-bd.inc");
-        try {
-            $connBD = new PDO("mysql:host=$dbHote; dbname=$dbNom", $dbUtilisateur, $dbMotPasse, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-            $connBD -> setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-        }
-        catch (PDOException $e) {
-            exit( "Erreur lors de la connexion à la BD :<br />\n" .  $e->getMessage() );
-        }
-        try {
-            // Préparation et exécution de la requête SQL permettant d'obtenir l'information sur le professeur.
-            $req = "SELECT role_id FROM users us WHERE users.login = $username AND users.password = $password";
-            $prepReq = $connBD -> prepare($req);
-            $prepReq -> execute();
-            // Retourne chaque ligne de données dans un objet (sans classe).
-            $prepReq -> setFetchMode(PDO::FETCH_OBJ);
-        } catch (PDOException $e) {
-            exit( "Erreur lors de l'exécution de la requête SQL :<br />\n" .  $e -> getMessage());
-        }
-        }
-    }
+   
+    
 }
