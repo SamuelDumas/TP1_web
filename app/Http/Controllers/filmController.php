@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\filmRequest;
 use App\Film;
 
-class viewFilmsController extends Controller
+class filmController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -105,11 +105,13 @@ class viewFilmsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
-        $donnees = $request->validated();
+    {
+        if(Auth::user()->role->name == 'Admin')
+        {
+        $film = \App\Film::findOrFail($id);
+        $film->update($request->all());
+        }
 
-        $film = Film::findOrFail($id);
-        $film->update($donnees->all());
     }
 
     /**
@@ -120,8 +122,10 @@ class viewFilmsController extends Controller
      */
     public function destroy($id)
     {
+        if(Auth::user()->role->name == 'Admin'){
         $film = Film::find($id);
         $film->delete();
         var_dump($film);
+        }
     }
 }
